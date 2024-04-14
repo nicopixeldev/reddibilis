@@ -1,23 +1,19 @@
 'use client';
 
-import { HipotecaForm } from '@/app/lib/definitions';
+import { useFormState } from 'react-dom';
+import Link from 'next/link';
 import {
   CheckIcon,
   ClockIcon,
-  CurrencyDollarIcon,
-  UserCircleIcon,
+  CurrencyDollarIcon
 } from '@heroicons/react/24/outline';
-import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { updateHipoteca } from '@/app/lib/actions';
-import { useFormState } from 'react-dom';
+import { createHipoteca } from '@/app/lib/actions/hipoteca';
 
-export default function EditHipotecaForm({ hipoteca }: { hipoteca: HipotecaForm }) {
+export default function CreateHipoteca() {
+  // The initialState can be anything you define, in this case, create an object with two empty keys: message and errors.
   const initialState = { message: null, errors: {} };
-  const updateHipotecaWithId = updateHipoteca.bind(null, hipoteca.id);
-  const [state, dispatch] = useFormState(updateHipotecaWithId, initialState);
-  // you can pass id to the Server Action using JS bind. 
-  // This will ensure that any values passed to the Server Action are encoded.
+  const [state, dispatch] = useFormState(createHipoteca, initialState);
   
   return (
     <form action={dispatch}>
@@ -36,7 +32,6 @@ export default function EditHipotecaForm({ hipoteca }: { hipoteca: HipotecaForm 
                 type="text"
                 placeholder="Un nombre que puedas identificar"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue={hipoteca.nombre}
               />
             </div>
           </div>
@@ -65,7 +60,6 @@ export default function EditHipotecaForm({ hipoteca }: { hipoteca: HipotecaForm 
                 step="1"
                 placeholder="20"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue={hipoteca.plazo_anos}
               />
             </div>
           </div>
@@ -94,7 +88,6 @@ export default function EditHipotecaForm({ hipoteca }: { hipoteca: HipotecaForm 
                 step="1000"
                 placeholder="180000"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue={hipoteca.total_capital}
               />
               <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
@@ -124,7 +117,6 @@ export default function EditHipotecaForm({ hipoteca }: { hipoteca: HipotecaForm 
                 step="1"
                 placeholder="80"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue={hipoteca.porcentaje_sobre_compra}
               />
             </div>
           </div>
@@ -153,7 +145,6 @@ export default function EditHipotecaForm({ hipoteca }: { hipoteca: HipotecaForm 
                   type="radio"
                   value="fijo"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                  defaultChecked={hipoteca.tipo === 'fijo'}
                 />
                 <label
                   htmlFor="fijo"
@@ -169,7 +160,6 @@ export default function EditHipotecaForm({ hipoteca }: { hipoteca: HipotecaForm 
                   type="radio"
                   value="variable"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                  defaultChecked={hipoteca.tipo === 'variable'}
                 />
                 <label
                   htmlFor="variable"
@@ -206,7 +196,6 @@ export default function EditHipotecaForm({ hipoteca }: { hipoteca: HipotecaForm 
                 step="0.01"
                 placeholder="2.5"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue={hipoteca.interes}
               />
             </div>
           </div>
@@ -229,7 +218,7 @@ export default function EditHipotecaForm({ hipoteca }: { hipoteca: HipotecaForm 
         >
           Cancelar
         </Link>
-        <Button type="submit">Actualizar hipoteca</Button>
+        <Button type="submit">Crear hipoteca</Button>
       </div>
     </form>
   );

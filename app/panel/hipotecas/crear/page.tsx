@@ -1,9 +1,7 @@
-import Form from '@/app/ui/hipotecas/create-form';
-import Breadcrumbs from '@/app/ui/hipotecas/breadcrumbs';
-import { fetchCustomers } from '@/app/lib/data';
+import CreateHipoteca from '@/app/ui/hipotecas/create';
+import Breadcrumbs from '@/app/ui/common/breadcrumbs';
  
 export default async function Page() {
-  const customers = await fetchCustomers();
  
   return (
     <main>
@@ -17,7 +15,7 @@ export default async function Page() {
           },
         ]}
       />
-      <Form />
+      <CreateHipoteca />
     </main>
   );
 }

@@ -1,10 +1,3 @@
-// By adding the 'use server', you mark all the exported functions within the file as server functions.
-// These server functions can then be imported into Client and Server components, making them extremely versatile.
-
-// You can also write Server Actions directly inside Server Components by adding "use server" inside the action.
-// But for this course, we'll keep them all organized in a separate file.
-
-// By adding the 'use server', you mark all the exported functions within the file as server functions. 
 'use server';
 
 import { z } from 'zod';
@@ -323,7 +316,7 @@ export async function createHipoteca(prevState: CreateHipotecaState, formData: F
 }
 
 
-export async function deleteHipoteca(id: string) {
+export async function deleteHipotecaById(id: string) {
   try {
     await sql`DELETE FROM hipotecas WHERE id = ${id}`;
     revalidatePath('/panel/hipotecas');

@@ -286,13 +286,8 @@ function formatNumbers(hipotecasRows: Hipoteca[]): any {
   }));
 }
 
-export async function fetchFilteredHipotecas(
-  query: string,
-  currentPage: number,
-) {
-  const ITEMS_PER_PAGE = 6;
+export async function fetchFilteredHipotecas(query: string) {
   noStore();
-  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
     const hipotecas = await sql<HipotecasTable>`
@@ -317,9 +312,7 @@ export async function fetchFilteredHipotecas(
       WHERE
         hipotecas.nombre ILIKE ${`%${query}%`}
       ORDER BY hipotecas.nombre DESC
-      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
-    console.log(hipotecas.rows);
     return hipotecas.rows;
   } catch (error) {
     console.error('Database Error:', error);
@@ -343,8 +336,6 @@ export async function fetchHipotecaById(id: string) {
       FROM hipotecas
       WHERE hipotecas.id = ${id};
     `;
-
-    console.log('fetched', data.rows);
 
     return data.rows[0];
   } catch (error) {
