@@ -29,7 +29,7 @@
     ".next/types/**/*.ts",
     "app/lib/placeholder-data.js",
     "scripts/seed.js",
-    "app/ui/hipotecas/table.jsx"
+    "app/ui/hipotecas/list.jsx"
   ],
   "exclude": ["node_modules"]
 }

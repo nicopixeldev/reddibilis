@@ -7,12 +7,7 @@ export default async function Page() {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Hipotecas', href: '/panel/hipotecas' },
-          {
-            label: 'Crear Hipoteca',
-            href: '/dashboard/invoices/create',
-            active: true,
-          },
+          { label: 'Hipotecas', href: '/panel/hipotecas' }
         ]}
       />
       <CreateHipoteca />
