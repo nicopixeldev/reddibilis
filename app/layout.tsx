@@ -1,6 +1,8 @@
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 import { Metadata } from 'next';
+
+import PrelineScript from "./PrelineScript";
  
 export const metadata: Metadata = {
   title: {
@@ -17,8 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+    <html lang="es">
+      <body className={`${inter.className} antialiased`}>
+        {children}
+        </body>
+        <PrelineScript />
     </html>
   );
 }

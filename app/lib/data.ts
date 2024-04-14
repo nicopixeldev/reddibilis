@@ -10,6 +10,9 @@ import {
   LatestInvoiceRaw,
   User,
   Revenue,
+  HipotecasTable,
+  Hipoteca,
+  HipotecaForm,
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -95,11 +98,11 @@ export async function fetchCardData() {
   }
 }
 
-const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredInvoices(
   query: string,
   currentPage: number,
 ) {
+  const ITEMS_PER_PAGE = 6;
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
@@ -134,7 +137,7 @@ export async function fetchFilteredInvoices(
 
 export async function fetchInvoicesPages(query: string) {
   noStore();
-
+  const ITEMS_PER_PAGE = 6;
   try {
     const count = await sql`SELECT COUNT(*)
     FROM invoices
@@ -244,5 +247,108 @@ export async function getUser(email: string) {
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
+  }
+}
+
+// reddibilis
+export async function fetchHipotecasPages(query: string) {
+  noStore();
+  const ITEMS_PER_PAGE = 6;
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM hipotecas
+    JOIN users ON hipotecas.user_id = users.id
+    WHERE
+      hipotecas.nombre::text ILIKE ${`%${query}%`}
+    `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of invoices.');
+  }
+}
+
+function numberWithCommas(x: number): string {
+  // return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, '.');
+  // const t = x.NumberFormat('es-ES', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+  // const t = new Intl.NumberFormat('es-ES').format(x);
+  // 
+  return x.toString();
+}
+
+function formatNumbers(hipotecasRows: Hipoteca[]): any {
+  return hipotecasRows.map(({ total_capital, ...rest }) => ({
+    total_capital: numberWithCommas(total_capital),
+    ...rest,
+  }));
+}
+
+export async function fetchFilteredHipotecas(
+  query: string,
+  currentPage: number,
+) {
+  const ITEMS_PER_PAGE = 6;
+  noStore();
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const hipotecas = await sql<HipotecasTable>`
+      SELECT
+        hipotecas.id,
+        hipotecas.nombre,
+        hipotecas.plazo_anos,
+        hipotecas.total_capital,
+        hipotecas.porcentaje_sobre_compra,
+        hipotecas.tipo,
+        hipotecas.interes,
+        hipotecas.diferencial_variable,
+        hipotecas.interes_mensual,
+        hipotecas.num_coutas,
+        hipotecas.cuota_mensual,
+        hipotecas.total_pagar,
+        hipotecas.total_intereses,
+        hipotecas.ano_media_intereses,
+        hipotecas.primer_ano_intereses
+      FROM hipotecas
+      JOIN users ON hipotecas.user_id = users.id
+      WHERE
+        hipotecas.nombre ILIKE ${`%${query}%`}
+      ORDER BY hipotecas.nombre DESC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+    console.log(hipotecas.rows);
+    return hipotecas.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch hipotecas.');
+  }
+}
+
+export async function fetchHipotecaById(id: string) {
+  noStore();
+
+  try {
+    const data = await sql<HipotecaForm>`
+      SELECT
+        hipotecas.id,
+        hipotecas.nombre,
+        hipotecas.plazo_anos,
+        hipotecas.total_capital,
+        hipotecas.interes,
+        hipotecas.tipo,
+        hipotecas.porcentaje_sobre_compra
+      FROM hipotecas
+      WHERE hipotecas.id = ${id};
+    `;
+
+    console.log('fetched', data.rows);
+
+    return data.rows[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoice.');
   }
 }

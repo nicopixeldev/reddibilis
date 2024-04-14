@@ -1,0 +1,39 @@
+import Search from '@/app/ui/search';
+import Table from '@/app/ui/hipotecas/table';
+import { CreateHipoteca } from '@/app/ui/hipotecas/buttons';
+import { lusitana } from '@/app/ui/fonts';
+import { HipotecasTableSkeleton } from '@/app/ui/skeletons';
+import { Suspense } from 'react';
+
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Hipotecas',
+};
+
+export default async function HipotecasPage({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
+
+  return (
+    <div className="w-full">
+      <div className="flex w-full items-center justify-between">
+        <h1 className={`${lusitana.className} text-2xl`}>Hipotecas</h1>
+      </div>
+      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+        <Search placeholder="Buscar hipotecas..." />
+        <CreateHipoteca />
+      </div>
+      <Suspense key={query + currentPage} fallback={<HipotecasTableSkeleton />}>
+        <Table query={query} currentPage={currentPage} />
+      </Suspense>
+    </div>
+  );
+}

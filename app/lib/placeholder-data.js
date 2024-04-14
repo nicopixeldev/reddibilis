@@ -180,9 +180,32 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
+// reddibilis
+
+const hipotecas = [
+  {
+    user_id: '410544b2-4001-4271-9855-fec4b6a6442a',
+    nombre: 'BBVA',
+    plazo_anos: 25,
+    total_capital: 80000,
+    porcentaje_sobre_compra: 80,
+    tipo: 'fijo',
+    interes: 1.5,
+    diferencial_variable: undefined,
+    interes_mensual: 0.342,
+    num_coutas: 360,
+    cuota_mensual: 333,
+    total_pagar: 119874,
+    total_intereses: 39874,
+    ano_media_intereses: 1329,
+    primer_ano_intereses: 2320
+  },
+];
+
 module.exports = {
   users,
   customers,
   invoices,
   revenue,
+  hipotecas
 };

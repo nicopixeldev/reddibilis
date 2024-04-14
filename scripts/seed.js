@@ -4,47 +4,49 @@ const {
   customers,
   revenue,
   users,
+  hipotecas
 } = require('../app/lib/placeholder-data.js');
+
 const bcrypt = require('bcrypt');
 
-async function seedUsers(client) {
-  try {
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-    // Create the "users" table if it doesn't exist
-    const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS users (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL
-      );
-    `;
+// async function seedUsers(client) {
+//   try {
+//     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+//     // Create the "users" table if it doesn't exist
+//     const createTable = await client.sql`
+//       CREATE TABLE IF NOT EXISTS users (
+//         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+//         name VARCHAR(255) NOT NULL,
+//         email TEXT NOT NULL UNIQUE,
+//         password TEXT NOT NULL
+//       );
+//     `;
 
-    console.log(`Created "users" table`);
+//     console.log(`Created "users" table`);
 
-    // Insert data into the "users" table
-    const insertedUsers = await Promise.all(
-      users.map(async (user) => {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
-        return client.sql`
-        INSERT INTO users (id, name, email, password)
-        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
-        ON CONFLICT (id) DO NOTHING;
-      `;
-      }),
-    );
+//     // Insert data into the "users" table
+//     const insertedUsers = await Promise.all(
+//       users.map(async (user) => {
+//         const hashedPassword = await bcrypt.hash(user.password, 10);
+//         return client.sql`
+//         INSERT INTO users (id, name, email, password)
+//         VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+//         ON CONFLICT (id) DO NOTHING;
+//       `;
+//       }),
+//     );
 
-    console.log(`Seeded ${insertedUsers.length} users`);
+//     console.log(`Seeded ${insertedUsers.length} users`);
 
-    return {
-      createTable,
-      users: insertedUsers,
-    };
-  } catch (error) {
-    console.error('Error seeding users:', error);
-    throw error;
-  }
-}
+//     return {
+//       createTable,
+//       users: insertedUsers,
+//     };
+//   } catch (error) {
+//     console.error('Error seeding users:', error);
+//     throw error;
+//   }
+// }
 
 async function seedInvoices(client) {
   try {
@@ -160,15 +162,145 @@ async function seedRevenue(client) {
   }
 }
 
+// reddibilis
+async function seedUsers(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+    // Create the "users" table if it doesn't exist
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS users (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        name VARCHAR(255) NULL,
+        email TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL
+      );
+    `;
+
+    console.log(`Created "users" table`);
+
+    // Insert data into the "users" table
+    const insertedUsers = await Promise.all(
+      users.map(async (user) => {
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        return client.sql`
+          INSERT INTO users (id, name, email, password)
+          VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+          ON CONFLICT (id) DO NOTHING;
+        `;
+      }),
+    );
+
+    console.log(`Seeded ${insertedUsers.length} users`);
+
+    return {
+      createTable,
+      users: insertedUsers,
+    };
+  } catch (error) {
+    console.error('Error seeding users:', error);
+    throw error;
+  }
+}
+
+async function seedHipotecas(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Create the "hipotecas" table if it doesn't exist
+    const createTable = await client.sql`
+    DROP TABLE IF EXISTS hipotecas;
+    CREATE TABLE IF NOT EXISTS hipotecas (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      user_id UUID NOT NULL,
+      nombre VARCHAR(255) NOT NULL,
+      plazo_anos INT NOT NULL,
+      total_capital DECIMAL(16,2) NOT NULL,
+      porcentaje_sobre_compra INT NOT NULL,
+      tipo VARCHAR(255) NOT NULL,
+      interes DECIMAL(16,2) NOT NULL,
+      diferencial_variable DECIMAL(16,2) NULL,
+      interes_mensual DECIMAL(16,2) NULL,
+      num_coutas INT NULL,
+      cuota_mensual DECIMAL(16,2) NULL,
+      total_pagar DECIMAL(16,2) NULL,
+      total_intereses DECIMAL(16,2) NULL,
+      ano_media_intereses DECIMAL(16,2) NULL,
+      primer_ano_intereses DECIMAL(16,2) NULL
+    );
+    `;
+
+    console.log(`Created "hipotecas" table`);
+
+    // Insert data into the "invoices" table
+    const insertedHipotecas = await Promise.all(
+      hipotecas.map(
+        (hipoteca) => client.sql`
+          INSERT INTO hipotecas (
+            user_id,
+            nombre,
+            plazo_anos,
+            total_capital,
+            porcentaje_sobre_compra,
+            tipo,
+            interes,
+            diferencial_variable,
+            interes_mensual,
+            num_coutas,
+            cuota_mensual,
+            total_pagar,
+            total_intereses,
+            ano_media_intereses,
+            primer_ano_intereses
+          )
+          VALUES (
+            ${hipoteca.user_id},
+            ${hipoteca.nombre},
+            ${hipoteca.plazo_anos},
+            ${hipoteca.total_capital},
+            ${hipoteca.porcentaje_sobre_compra},
+            ${hipoteca.tipo},
+            ${hipoteca.interes},
+            ${hipoteca.diferencial_variable},
+            ${hipoteca.interes_mensual},
+            ${hipoteca.num_coutas},
+            ${hipoteca.cuota_mensual},
+            ${hipoteca.total_pagar},
+            ${hipoteca.total_intereses},
+            ${hipoteca.ano_media_intereses},
+            ${hipoteca.primer_ano_intereses}
+          )
+          ON CONFLICT (id) DO NOTHING;
+        `
+      ),
+    );
+    
+    console.log(`Seeded ${insertedHipotecas.length} hipotecas`);
+
+    return {
+      createTable,
+      hipotecas: insertedHipotecas,
+    };
+
+  } catch (error) {
+    console.error('Error seeding invoices:', error);
+    throw error;
+  }
+}
+
+
+
 async function main() {
-  const client = await db.connect();
+  const dbClient = await db.connect();
 
-  await seedUsers(client);
-  await seedCustomers(client);
-  await seedInvoices(client);
-  await seedRevenue(client);
+  // await seedUsers(dbClient);
+  // await seedCustomers(dbClient);
+  // await seedInvoices(dbClient);
+  // await seedRevenue(dbClient);
 
-  await client.end();
+  await seedUsers(dbClient);
+  await seedHipotecas(dbClient);
+
+  await dbClient.end();
 }
 
 main().catch((err) => {
