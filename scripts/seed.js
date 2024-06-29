@@ -4,7 +4,8 @@ const {
   customers,
   revenue,
   users,
-  hipotecas
+  hipotecas,
+  inversiones
 } = require('../app/lib/placeholder-data.js');
 
 const bcrypt = require('bcrypt');
@@ -287,18 +288,123 @@ async function seedHipotecas(client) {
   }
 }
 
+async function seedInversiones(client) {
+  try {
+    // Crear la tabla de "inversiones" si no existe
+    const createTable = await client.sql`
+    DROP TABLE IF EXISTS inversiones;
+    CREATE TABLE IF NOT EXISTS inversiones (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      user_id UUID NOT NULL,
+      nombre VARCHAR(255) NOT NULL,
+      valor DECIMAL(16,2) NOT NULL,
+      itp DECIMAL(16,2) NOT NULL,
+      notaria DECIMAL(16,2) NULL,
+      registro DECIMAL(16,2) NULL,
+      gestoria DECIMAL(16,2) NULL,
+      reforma DECIMAL(16,2) NULL,
+      comision_agencia DECIMAL(16,2) NULL,
+      gastos_hipoteca DECIMAL(16,2) NULL,
+      alquiler_renta_mes DECIMAL(16,2) NOT NULL,
+      gastos_comunidad DECIMAL(16,2) NULL,
+      gastos_mantenimiento DECIMAL(16,2) NULL,
+      seguro_hogar DECIMAL(16,2) NULL,
+      seguro_vida DECIMAL(16,2) NULL,
+      seguro_impago DECIMAL(16,2) NULL,
+      ibi DECIMAL(16,2) NOT NULL,
+      beneficio_bruto_ano DECIMAL(16,2) NULL,
+      beneficio_neto_ano DECIMAL(16,2) NULL,
+      rentabilidad_bruta DECIMAL(5,2) NULL,
+      rentabilidad_neta DECIMAL(5,2) NULL,
+      cashflow_ano DECIMAL(16,2) NULL,
+      roce DECIMAL(5,2) NULL,
+      alquiler_minimo DECIMAL(16,2) NULL
+    );
+    `;
+
+    console.log(`Created "inversiones" table`);
+
+    // Insertar datos en la tabla "inversiones"
+    const insertedInversiones = await Promise.all(
+      inversiones.map(
+        (inversion) => client.sql`
+          INSERT INTO inversiones (
+            user_id,
+            nombre,
+            valor,
+            itp,
+            notaria,
+            registro,
+            gestoria,
+            reforma,
+            comision_agencia,
+            gastos_hipoteca,
+            alquiler_renta_mes,
+            gastos_comunidad,
+            gastos_mantenimiento,
+            seguro_hogar,
+            seguro_vida,
+            seguro_impago,
+            ibi,
+            beneficio_bruto_ano,
+            beneficio_neto_ano,
+            rentabilidad_bruta,
+            rentabilidad_neta,
+            cashflow_ano,
+            roce,
+            alquiler_minimo
+          )
+          VALUES (
+            ${inversion.user_id},
+            ${inversion.nombre},
+            ${inversion.valor},
+            ${inversion.itp},
+            ${inversion.notaria},
+            ${inversion.registro},
+            ${inversion.gestoria},
+            ${inversion.reforma},
+            ${inversion.comision_agencia},
+            ${inversion.gastos_hipoteca},
+            ${inversion.alquiler_renta_mes},
+            ${inversion.gastos_comunidad},
+            ${inversion.gastos_mantenimiento},
+            ${inversion.seguro_hogar},
+            ${inversion.seguro_vida},
+            ${inversion.seguro_impago},
+            ${inversion.ibi},
+            ${inversion.beneficio_bruto_ano},
+            ${inversion.beneficio_neto_ano},
+            ${inversion.rentabilidad_bruta},
+            ${inversion.rentabilidad_neta},
+            ${inversion.cashflow_ano},
+            ${inversion.roce},
+            ${inversion.alquiler_minimo}
+          )
+          ON CONFLICT (id) DO NOTHING;
+        `
+      )
+    );
+
+    console.log(`Seeded ${insertedInversiones.length} inversiones`);
+
+    return {
+      createTable,
+      inversiones: insertedInversiones,
+    };
+
+  } catch (error) {
+    console.error('Error seeding inversiones:', error);
+    throw error;
+  }
+}
 
 
 async function main() {
   const dbClient = await db.connect();
 
-  // await seedUsers(dbClient);
-  // await seedCustomers(dbClient);
-  // await seedInvoices(dbClient);
-  // await seedRevenue(dbClient);
-
   await seedUsers(dbClient);
   await seedHipotecas(dbClient);
+  await seedInversiones(dbClient);
 
   await dbClient.end();
 }

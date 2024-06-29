@@ -3,10 +3,13 @@ import { unstable_noStore as noStore } from 'next/cache';
 import {
   HipotecasTable,
   HipotecaForm,
+  InversionesTable,
+  InversionForm
 } from './definitions';
 
 
 // reddibilis
+// hipotecas
 export async function fetchHipotecasPages(query: string) {
   noStore();
   const ITEMS_PER_PAGE = 6;
@@ -76,6 +79,83 @@ export async function fetchHipotecaById(id: string) {
         hipotecas.porcentaje_sobre_compra
       FROM hipotecas
       WHERE hipotecas.id = ${id};
+    `;
+
+    return data.rows[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoice.');
+  }
+}
+
+// inversiones
+export async function fetchFilteredInversiones(query: string) {
+  noStore();
+
+  try {
+    const inversiones = await sql<InversionesTable>`
+      SELECT
+        inversiones.id,
+        inversiones.nombre,
+        inversiones.valor,
+        inversiones.itp,
+        inversiones.notaria,
+        inversiones.registro,
+        inversiones.gestoria,
+        inversiones.reforma,
+        inversiones.comision_agencia,
+        inversiones.gastos_hipoteca,
+        inversiones.alquiler_renta_mes,
+        inversiones.gastos_comunidad,
+        inversiones.gastos_mantenimiento,
+        inversiones.seguro_hogar,
+        inversiones.seguro_vida,
+        inversiones.seguro_impago,
+        inversiones.ibi,
+        inversiones.beneficio_bruto_ano,
+        inversiones.beneficio_neto_ano,
+        inversiones.rentabilidad_bruta,
+        inversiones.rentabilidad_neta,
+        inversiones.cashflow_ano,
+        inversiones.roce,
+        inversiones.alquiler_minimo
+      FROM inversiones
+      JOIN users ON inversiones.user_id = users.id
+      WHERE
+        inversiones.nombre ILIKE ${`%${query}%`}
+      ORDER BY inversiones.nombre DESC
+    `;
+    return inversiones.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Error al obtener inversiones.');
+  }
+}
+
+export async function fetchInversionById(id: string) {
+  noStore();
+
+  try {
+    const data = await sql<InversionForm>`
+      SELECT
+        inversiones.id,
+        inversiones.nombre,
+        inversiones.valor,
+        inversiones.itp,
+        inversiones.notaria,
+        inversiones.registro,
+        inversiones.gestoria,
+        inversiones.reforma,
+        inversiones.comision_agencia,
+        inversiones.gastos_hipoteca,
+        inversiones.alquiler_renta_mes,
+        inversiones.gastos_comunidad,
+        inversiones.seguro_hogar,
+        inversiones.seguro_vida,
+        inversiones.seguro_impago,
+        inversiones.ibi
+      FROM inversiones
+      WHERE inversiones.id = ${id};
     `;
 
     return data.rows[0];

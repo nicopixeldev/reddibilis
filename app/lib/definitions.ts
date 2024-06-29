@@ -24,7 +24,6 @@ export type Hipoteca = {
   primer_ano_intereses?: number;
 };
 
-
 export type HipotecasTable = {
   id: string;
   user_id: string;
@@ -52,4 +51,52 @@ export type HipotecaForm = {
   porcentaje_sobre_compra: number;
   tipo: 'fijo' | 'variable';
   interes: number;
+};
+
+export type InversionesTable = {
+  id: string;
+  user_id: string;
+  nombre: string;
+  valor: number;
+  itp: number;
+  notaria: number;
+  registro: number;
+  gestoria: number;
+  reforma?: number;
+  comision_agencia?: number;
+  gastos_hipoteca?: number;
+  alquiler_renta_mes: number;
+  gastos_comunidad?: number;
+  gastos_mantenimiento?: number;
+  seguro_hogar?: number;
+  seguro_vida?: number;
+  seguro_impago?: number;
+  ibi: number;
+  beneficio_bruto_ano?: number;
+  beneficio_neto_ano?: number;
+  rentabilidad_bruta?: number;
+  rentabilidad_neta?: number;
+  cashflow_ano?: number;
+  roce?: number;
+  alquiler_minimo?: number;
+};
+
+export type InversionForm = {
+  id: string;
+  nombre: string;
+  valor: number;
+  itp: number;
+  notaria: number;
+  registro: number;
+  gestoria: number;
+  reforma?: number;
+  comision_agencia?: number;
+  gastos_hipoteca?: number;
+  alquiler_renta_mes: number;
+  gastos_comunidad?: number;
+  gastos_mantenimiento?: number;
+  seguro_hogar?: number;
+  seguro_vida?: number;
+  seguro_impago?: number;
+  ibi: number;
 };

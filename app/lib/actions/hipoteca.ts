@@ -162,7 +162,7 @@ export async function deleteHipotecaById(id: string) {
 
     return { message: 'Hipoteca Borrada' }
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Invoice.' }
+    return { message: 'Error de la BD: fallo al borrar hipoteca' }
   }
 }
 
