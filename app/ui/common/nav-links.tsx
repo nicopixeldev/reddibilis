@@ -20,11 +20,16 @@ const links = [
     href: '/panel/hipotecas/',
     icon: UserGroupIcon
   },
+  {
+    name: 'Escenarios',
+    href: '/panel/escenarios/',
+    icon: UserGroupIcon
+  },
 ];
 
 export default function NavLinks() {
   const pathname = usePathname();
-  console.log(pathname);
+
   return (
     <>
       {links.map((link) => {

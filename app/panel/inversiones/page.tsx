@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Innversiones',
+  title: 'Inversiones',
 };
 
 export default async function HipotecasPage({

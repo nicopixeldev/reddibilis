@@ -29,7 +29,9 @@
     ".next/types/**/*.ts",
     "app/lib/placeholder-data.js",
     "scripts/seed.js",
-    "app/ui/hipotecas/list.jsx"
-  ],
+    "app/ui/hipotecas/list.jsx",
+    "app/ui/hipotecas/pick.jsx",
+    "app/ui/escenarios/server.jsx"
+  , "app/panel/escenarios/_____page.jsx"  ],
   "exclude": ["node_modules"]
 }

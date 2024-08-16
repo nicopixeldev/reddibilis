@@ -164,3 +164,22 @@ export async function fetchInversionById(id: string) {
     throw new Error('Failed to fetch invoice.');
   }
 }
+
+export async function checkHipotecaById(id: string): Promise<boolean> {
+  noStore();
+
+  try {
+    const data = await sql`
+      SELECT
+        1
+      FROM hipotecas
+      WHERE hipotecas.id = ${id};
+    `;
+
+    // Si la consulta retorna algún registro, devolvemos true
+    return data.rows.length > 0;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to check hipoteca.');
+  }
+}
