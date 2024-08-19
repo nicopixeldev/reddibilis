@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 import Dropdown from '@/app/ui/common/dropdown';
 import { useRouter } from 'next/navigation';
 
-export default function WrapperDropdown({ options, selectedHipoteca, selectedInversion }) { 
+export default function WrapperDropdown({ options, selectedHipotecaId, selectedInversionId }) { 
   const router = useRouter();
 
   const [selectedOption, setSelectedOption] = useState({ 
-    hipotecas: selectedHipoteca,
-    inversiones: selectedInversion
+    hipotecas: selectedHipotecaId,
+    inversiones: selectedInversionId
   });
 
   const handleChange = (idValue, typeKey) => {

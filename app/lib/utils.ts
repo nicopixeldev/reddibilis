@@ -30,3 +30,32 @@ export function IPMT(rate: number, per: number, pv: number, pmt: number): number
   var tmp = Math.pow(1 + rate, per)
   return 0 - (pv * tmp * rate + pmt * (tmp - 1))
 }
+
+export function precioEntradaTotal(args: any): number {
+
+  const {
+    valor,
+    itp,
+    notaria,
+    registro,
+    gestoria,
+    reforma,
+    comision_agencia,
+  } = convertObjToNum(args);
+
+  const gastosCompraVenta = valor + ((valor * (itp/100)) + notaria + registro + gestoria + reforma + comision_agencia);
+
+  return gastosCompraVenta;
+}
+
+export function convertObjToNum(obj: any) {
+  const newObj: Record<string, number> = {};
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      newObj[key] = Math.round(parseFloat(obj[key]) * 100) / 100;
+    }
+  }
+
+  return newObj;
+}

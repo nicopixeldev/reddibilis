@@ -1,7 +1,7 @@
-import { fetchFilteredHipotecas, fetchFilteredInversiones } from "@/app/lib/data";
+import { fetchFilteredHipotecas, fetchFilteredInversiones } from '@/app/lib/data';
 import WrapperDropdown from '@/app/ui/escenarios/wrapper-dropdown';
 import WrapperResults from '@/app/ui/escenarios/wrapper-results';
-import { notFound } from "next/navigation";
+import { notFound } from 'next/navigation';
 
 export default async function Page({ params }) {  
   const [inversiones, hipotecas] = await Promise.all([
@@ -21,15 +21,15 @@ export default async function Page({ params }) {
     <main>
       <WrapperDropdown
         options={{ inversiones, hipotecas }}
-        selectedHipoteca={selectedHipotecaId}
-        selectedInversion={selectedInversionId}
+        selectedHipotecaId={selectedHipotecaId}
+        selectedInversionId={selectedInversionId}
       />
 
-      <WrapperResults
+      {selectedHipotecaId && selectedHipotecaId && <WrapperResults
         options={{ inversiones, hipotecas }}
-        selectedHipoteca={selectedHipotecaId}
-        selectedInversion={selectedInversionId}
-      />
+        selectedHipotecaId={selectedHipotecaId}
+        selectedInversionId={selectedInversionId}
+      />}
     </main>
   );
 }

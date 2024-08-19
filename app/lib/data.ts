@@ -6,9 +6,8 @@ import {
   InversionesTable,
   InversionForm
 } from './definitions';
+import { precioEntradaTotal, convertObjToNum } from '@/app/lib/utils'
 
-
-// reddibilis
 // hipotecas
 export async function fetchHipotecasPages(query: string) {
   noStore();
@@ -76,7 +75,8 @@ export async function fetchHipotecaById(id: string) {
         hipotecas.total_capital,
         hipotecas.interes,
         hipotecas.tipo,
-        hipotecas.porcentaje_sobre_compra
+        hipotecas.porcentaje_sobre_compra,
+        hipotecas.cuota_mensual
       FROM hipotecas
       WHERE hipotecas.id = ${id};
     `;
@@ -178,6 +178,69 @@ export async function checkHipotecaById(id: string): Promise<boolean> {
 
     // Si la consulta retorna algún registro, devolvemos true
     return data.rows.length > 0;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to check hipoteca.');
+  }
+}
+
+// escenarios
+export async function calculateEscenario(hipotecaId: string, inversionId: string) {
+  noStore();
+
+  try {
+    const [
+      hipoteca,
+      inversion
+    ] = await Promise.all([ fetchHipotecaById(hipotecaId), fetchInversionById(inversionId) ]);
+
+    const { 
+      valor,
+      itp,
+      notaria,
+      registro,
+      gestoria,
+      reforma,
+      comision_agencia,
+      gastos_hipoteca,
+      alquiler_renta_mes,
+      gastos_comunidad,
+      seguro_hogar,
+      seguro_vida,
+      seguro_impago,
+      ibi
+    } = convertObjToNum(inversion);
+
+    const {
+      cuota_mensual,
+      total_capital,
+      porcentaje_sobre_compra,
+    } = convertObjToNum(hipoteca);
+
+    const precioEntrada = precioEntradaTotal({ valor, itp, notaria, registro, gestoria, reforma, comision_agencia });
+
+    const ingresos = alquiler_renta_mes*12;
+    const rentabilidadBruta = parseFloat(((ingresos/precioEntrada)*100).toFixed(2));
+
+    const gastos = ((gastos_comunidad + cuota_mensual)*12) + seguro_hogar + seguro_vida + seguro_impago + ibi;
+
+    const cashflow = parseFloat((ingresos - gastos).toFixed(2));
+
+    const valorITP = valor * (itp/100);
+    const porcentajeValorHipoteca = parseFloat((total_capital * (1 - (porcentaje_sobre_compra / 100))).toFixed(2));
+    const capitalInvertido = valorITP + porcentajeValorHipoteca;
+
+    const cashOnCash =parseFloat(((cashflow / capitalInvertido) * 100).toFixed(2));
+
+    const data = {
+      precioEntrada,
+      rentabilidadBruta,
+      cashflow,
+      capitalInvertido,
+      cashOnCash
+    };
+
+    return data;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to check hipoteca.');

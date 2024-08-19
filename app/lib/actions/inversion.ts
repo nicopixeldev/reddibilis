@@ -4,7 +4,6 @@ import { z } from 'zod'
 import { sql } from '@vercel/postgres'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { IPMT, PMT } from '@/app/lib/utils'
 
 const InversionSchema = z.object({
   id: z.string(),
