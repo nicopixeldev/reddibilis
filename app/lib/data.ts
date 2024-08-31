@@ -192,7 +192,7 @@ export async function calculateEscenario(hipotecaId: string, inversionId: string
     const [
       hipoteca,
       inversion
-    ] = await Promise.all([ fetchHipotecaById(hipotecaId), fetchInversionById(inversionId) ]);
+    ] = await Promise.all([fetchHipotecaById(hipotecaId), fetchInversionById(inversionId)]);
 
     const { 
       valor,

@@ -29,7 +29,7 @@ export default function WrapperDropdown({ options, selectedHipotecaId, selectedI
   }, [selectedOption, router]);
   
   return (
-    <div>
+    <div className="flex flex-col lg:flex-row gap-2 md:mt-8 py-8">
         <Dropdown
           options={options['hipotecas']}
           label="Hipotecas"

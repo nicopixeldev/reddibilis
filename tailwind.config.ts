@@ -19,6 +19,9 @@ const config: Config = {
           600: '#2F6FEB',
         },
       },
+      gap: {
+        '15': '6rem',
+      }
     },
     keyframes: {
       shimmer: {

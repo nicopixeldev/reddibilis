@@ -18,7 +18,9 @@ export default async function Page({ params }) {
   ] = params?.ids ?? [];
 
   return (
-    <main>
+    <>
+      <h1 className="text-2xl pb-5">Escenarios</h1>
+      
       <WrapperDropdown
         options={{ inversiones, hipotecas }}
         selectedHipotecaId={selectedHipotecaId}
@@ -30,6 +32,6 @@ export default async function Page({ params }) {
         selectedHipotecaId={selectedHipotecaId}
         selectedInversionId={selectedInversionId}
       />}
-    </main>
+    </>
   );
 }
