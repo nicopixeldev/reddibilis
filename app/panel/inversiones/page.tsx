@@ -22,7 +22,7 @@ export default async function HipotecasPage({
   const query = searchParams?.query || '';
 
   return (
-    <div className="">
+    <>
       <h1 className="text-2xl pb-5">Inversiones</h1>
       <div className="mb-8 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Buscar inversiones..." />
@@ -37,6 +37,6 @@ export default async function HipotecasPage({
       <Suspense key={query} fallback={<InversionesTableRowSkeleton />}>
         <InversionesList query={query} />
       </Suspense>
-    </div>
+    </>
   );
 }
