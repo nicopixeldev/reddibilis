@@ -1,13 +1,5 @@
 import { fetchFilteredInversiones } from '@/app/lib/data';
-
-const MetricInfo = ({ label, textValue }) => <>
-  <div className="w-full sm:w-1/2 mb-4">
-    <dt className="text-base font-bold leading-7 text-gray-800">{label}</dt>
-    <dd className="text-lg tracking-tight text-gray-800">
-      {textValue}
-    </dd>
-  </div>
-</>
+import MetricInfo from '@/app/ui/common/metric-info';
 
 const CardInversion = ({ inversion }) => {
   return <div className="border-2 border-blue-300 p-10 lg:flex-[0_0_48%] rounded-md">

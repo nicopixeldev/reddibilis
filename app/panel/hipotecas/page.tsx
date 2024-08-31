@@ -22,11 +22,9 @@ export default async function HipotecasPage({
   const query = searchParams?.query || '';
 
   return (
-    <div className="w-full">
-      <div className="flex w-full items-center justify-between">
-        <h1 className={`${lusitana.className} text-2xl`}>Hipotecas</h1>
-      </div>
-      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+    <>
+      <h1 className="text-2xl pb-5">Hipotecas</h1>
+      <div className="mb-8 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Buscar hipotecas..." />
         <Link
           href="/panel/hipotecas/crear"
@@ -39,6 +37,6 @@ export default async function HipotecasPage({
       <Suspense key={query} fallback={<HipotecasTableSkeleton />}>
         <HipotecasList query={query} />
       </Suspense>
-    </div>
+    </>
   );
 }
