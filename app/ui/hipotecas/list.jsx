@@ -8,20 +8,20 @@ const CardHipoteca = ({ hipoteca }) => {
   const deleteById = deleteHipotecaById.bind(null, hipoteca.id);
 
   return (
-    <div className="border-2 border-blue-300 p-10 lg:flex-[0_0_48%] rounded-md">
-      <form action={deleteById}>
-        <button className="rounded-md border p-2 hover:bg-gray-100">
+    <div className="border-2 border-blue-300 p-10 lg:flex-[0_0_48%] rounded-md relative">
+      <form action={deleteById} className="flex gap-3 mb-10 absolute top-10 right-10" >
+        <button className="rounded-md">
           <span className="sr-only">Delete</span>
           <TrashIcon className="w-5" />
         </button>
+        <Link
+          href={`/panel/hipotecas/${hipoteca.id}/editar`}
+          className="rounded-md"
+        >
+          <PencilIcon className="w-5" />
+        </Link>
       </form>
-      <Link
-        href={`/panel/hipotecas/${hipoteca.id}/editar`}
-        className="rounded-md border p-2 hover:bg-gray-100"
-      >
-        <PencilIcon className="w-5" />
-      </Link>
-
+      
       <h2 className="text-2xl font-bold tracking-tight text-gray-800 mb-5">{hipoteca.nombre}</h2>
       <hr />
 

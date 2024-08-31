@@ -1,6 +1,5 @@
 import Search from '@/app/ui/common/search';
 import HipotecasList from '@/app/ui/hipotecas/list';
-import { lusitana } from '@/app/ui/fonts';
 import { HipotecasTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { PlusIcon, TrashIcon, PencilIcon } from '@heroicons/react/24/outline';
