@@ -9,7 +9,7 @@ export default async function WrapperResults({ selectedHipotecaId, selectedInver
       <hr />
       <h2 className="text-xl pb-5 mt-10"></h2>
 
-      <div className="flex flex-col lg:flex-row lg:flex-wrap gap-15">
+      <div className="flex flex-col lg:flex-row lg:flex-wrap gap-11">
         <EscenarioInfo
           label="Valor total con gastos"
           textValue={`${new Intl.NumberFormat('es-ES').format(data.precioEntrada)} €`}

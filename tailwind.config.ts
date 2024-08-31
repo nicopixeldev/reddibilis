@@ -20,7 +20,7 @@ const config: Config = {
         },
       },
       gap: {
-        '15': '6rem',
+        '11': '3rem',
       }
     },
     keyframes: {

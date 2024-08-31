@@ -2,6 +2,9 @@
 
 import {
   UserGroupIcon,
+  BuildingStorefrontIcon,
+  CurrencyEuroIcon,
+  ChartBarSquareIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -11,17 +14,17 @@ const links = [
   {
     name: 'Inversiones',
     href: '/panel/inversiones/',
-    icon: UserGroupIcon
+    icon: BuildingStorefrontIcon
   },
   {
-    name: 'Hipotecas',
+    name: 'Financiación',
     href: '/panel/hipotecas/',
-    icon: UserGroupIcon
+    icon: CurrencyEuroIcon
   },
   {
     name: 'Escenarios',
     href: '/panel/escenarios/',
-    icon: UserGroupIcon
+    icon: ChartBarSquareIcon
   },
 ];
 
