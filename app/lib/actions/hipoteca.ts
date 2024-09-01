@@ -53,6 +53,7 @@ export async function createHipoteca(
   prevState: CreateHipotecaState,
   formData: FormData,
 ) {
+
   const validatedFields = CreateHipoteca.safeParse({
     nombre: formData.get('nombre'),
     plazo_anos: formData.get('plazo_anos'),

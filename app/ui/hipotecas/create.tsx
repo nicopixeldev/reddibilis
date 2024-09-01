@@ -11,7 +11,6 @@ import { Button } from '@/app/ui/common/button';
 import { createHipoteca } from '@/app/lib/actions/hipoteca';
 
 export default function CreateHipoteca() {
-  // The initialState can be anything you define, in this case, create an object with two empty keys: message and errors.
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createHipoteca, initialState);
   
