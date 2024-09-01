@@ -11,13 +11,7 @@ export const metadata: Metadata = {
   title: 'Hipotecas',
 };
 
-export default async function HipotecasPage({
-  searchParams,
-}: {
-  searchParams?: {
-    query?: string;
-  };
-}) {
+export default async function HipotecasPage({ searchParams }: { searchParams?: { query?: string; };}) {
   const query = searchParams?.query || '';
 
   return (
