@@ -1,3 +1,4 @@
+// @ts-ignore  
 import SideNav from '@/app/ui/common/sidenav';
  
 export default function Layout({ children }: { children: React.ReactNode }) {

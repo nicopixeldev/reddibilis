@@ -31,7 +31,7 @@
     ".next/types/**/*.ts",
     "app/lib/placeholder-data.js",
     "scripts/seed.js",
-    "app/ui/hipotecas/list.jsx",
+    "app/ui/hipotecas/list.jsx", "cypress/support/e2e.js",
   ],
   "exclude": ["node_modules"]
 }

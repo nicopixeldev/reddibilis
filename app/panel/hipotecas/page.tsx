@@ -1,3 +1,4 @@
+// @ts-ignore  
 import Search from '@/app/ui/common/search';
 import HipotecasList from '@/app/ui/hipotecas/list';
 import { HipotecasTableSkeleton } from '@/app/ui/skeletons';

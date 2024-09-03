@@ -7,6 +7,7 @@ import {
   ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
+// @ts-ignore  
 import { Button } from '@/app/ui/common/button';
 import { useFormState } from 'react-dom'
 import { authenticate } from '@/app/lib/actions/user';
@@ -61,6 +62,7 @@ export default function LoginForm() {
                 placeholder="Introducir contraseña"
                 required
                 minLength={6}
+                data-testid="password-input"
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>

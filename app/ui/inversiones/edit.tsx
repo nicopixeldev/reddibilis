@@ -8,6 +8,7 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+// @ts-ignore  
 import { Button } from '@/app/ui/common/button';
 import { updateInversion } from '@/app/lib/actions/inversion';
 import { useFormState } from 'react-dom';

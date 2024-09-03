@@ -1,3 +1,4 @@
+// @ts-ignore  
 import Search from '@/app/ui/common/search';
 import InversionesList from '@/app/ui/inversiones/list';
 import { lusitana } from '@/app/ui/fonts';

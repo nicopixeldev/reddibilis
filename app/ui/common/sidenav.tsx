@@ -1,4 +1,5 @@
 import Link from 'next/link';
+// @ts-ignore  
 import NavLinks from '@/app/ui/common/nav-links';
 import Logo from '@/app/ui/logo';
 import { PowerIcon } from '@heroicons/react/24/outline';

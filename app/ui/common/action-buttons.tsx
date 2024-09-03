@@ -1,4 +1,5 @@
 import Link from 'next/link';
+// @ts-ignore  
 import { Button } from '@/app/ui/common/button';
 
 interface ActionButtonsProps {

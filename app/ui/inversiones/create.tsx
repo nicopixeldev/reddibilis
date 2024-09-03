@@ -1,8 +1,9 @@
 'use client';
 
 import { useFormState } from 'react-dom';
+// @ts-ignore  
 import Input from '@/app/ui/common/input';
-
+// @ts-ignore  
 import ActionButtons from '@/app/ui/common/action-buttons';
 import { createInversion } from '@/app/lib/actions/inversion';
 

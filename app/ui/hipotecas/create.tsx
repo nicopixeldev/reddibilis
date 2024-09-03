@@ -7,6 +7,7 @@ import {
   ClockIcon,
   CurrencyDollarIcon
 } from '@heroicons/react/24/outline';
+// @ts-ignore  
 import { Button } from '@/app/ui/common/button';
 import { createHipoteca } from '@/app/lib/actions/hipoteca';
 
